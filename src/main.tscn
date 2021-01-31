@@ -1,6 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
+[ext_resource path="res://src/lobby/lobby.gd" type="Script" id=1]
 [ext_resource path="res://src/main.gd" type="Script" id=2]
+[ext_resource path="res://src/lobby/chatroom.gd" type="Script" id=3]
 [ext_resource path="res://src/debug.gd" type="Script" id=4]
 [ext_resource path="res://src/networking/networking.gd" type="Script" id=5]
 
@@ -8,8 +10,10 @@
 script = ExtResource( 2 )
 
 [node name="lobby" type="Control" parent="."]
+visible = false
 margin_right = 40.0
 margin_bottom = 40.0
+script = ExtResource( 1 )
 __meta__ = {
 "_edit_lock_": true,
 "_edit_use_anchors_": false
@@ -53,6 +57,7 @@ __meta__ = {
 }
 
 [node name="host" type="Control" parent="lobby"]
+visible = false
 margin_right = 40.0
 margin_bottom = 40.0
 __meta__ = {
@@ -90,6 +95,31 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="chatroom" type="Control" parent="lobby"]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 3 )
+
+[node name="chat_display" type="TextEdit" parent="lobby/chatroom"]
+margin_left = 680.0
+margin_top = 336.0
+margin_right = 1008.0
+margin_bottom = 536.0
+readonly = true
+show_line_numbers = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="chat_input" type="LineEdit" parent="lobby/chatroom"]
+margin_left = 680.0
+margin_top = 544.0
+margin_right = 1000.0
+margin_bottom = 592.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="networking" type="Node" parent="."]
 script = ExtResource( 5 )
 
@@ -97,5 +127,5 @@ script = ExtResource( 5 )
 script = ExtResource( 4 )
 
 [node name="players" type="Node" parent="."]
-[connection signal="button_up" from="lobby/join/join_button" to="networking" method="join_server"]
-[connection signal="button_up" from="lobby/host/host_button" to="networking" method="start_server"]
+[connection signal="button_up" from="lobby/join/join_button" to="lobby" method="join_server"]
+[connection signal="button_up" from="lobby/host/host_button" to="lobby" method="host_server"]
