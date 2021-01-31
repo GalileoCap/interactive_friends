@@ -1,0 +1,86 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://imported/ChatRoom.gd" type="Script" id=1]
+
+
+[node name="ChatRoom" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="SetUp" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="LeaveButton" type="Button" parent="SetUp"]
+visible = false
+margin_left = 691.923
+margin_top = 398.35
+margin_right = 916.923
+margin_bottom = 559.35
+text = "LEAVE"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="JoinButton" type="Button" parent="SetUp"]
+margin_left = 239.757
+margin_top = 400.594
+margin_right = 400.757
+margin_bottom = 542.594
+text = "JOIN"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HostButton" type="Button" parent="SetUp"]
+margin_left = 60.0
+margin_top = 408.0
+margin_right = 210.0
+margin_bottom = 544.0
+text = "HOST"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="IpEnter" type="LineEdit" parent="SetUp"]
+margin_left = 438.0
+margin_top = 400.0
+margin_right = 626.0
+margin_bottom = 532.0
+text = "127.0.0.1"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RoomUI" type="Panel" parent="."]
+margin_left = 54.0
+margin_top = 38.0
+margin_right = 936.0
+margin_bottom = 356.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ChatInput" type="LineEdit" parent="RoomUI"]
+margin_left = 58.0
+margin_top = 238.0
+margin_right = 823.0
+margin_bottom = 287.0
+
+[node name="ChatDisplay" type="TextEdit" parent="RoomUI"]
+margin_left = 56.0
+margin_top = 29.1189
+margin_right = 835.0
+margin_bottom = 229.119
+readonly = true
+show_line_numbers = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="button_up" from="SetUp/JoinButton" to="." method="join_room"]
+[connection signal="button_up" from="SetUp/HostButton" to="." method="host_room"]
