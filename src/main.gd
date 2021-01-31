@@ -14,12 +14,11 @@ func register_player(id): #U: Creates a player when they join
 	player.position = players[id].pos
 	player.DEBUG = $debug
 	$players.add_child(player)
-
-	$debug.rpc('logger', 3, ['Registered player', id])
+	
+	$debug.logger(3, ['Registered player', id])
 
 func unregister_player(id): #U: Deletes a player when they leave
 	players.erase(id)
-	
 	get_node('players/'+str(id)).queue_free()
 	
-	$debug.rpc('logger', 3, ['Unregistered player', id])
+	$debug.logger(3, ['Unregistered player', id])

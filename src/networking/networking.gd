@@ -13,7 +13,7 @@ func start_server():
 	var max_players = get_node('../lobby/host/max_players_input').text
 	
 	var host = NetworkedMultiplayerENet.new()
-	host.create_server(port, max_players)
+	host.create_server(int(port), int(max_players))
 	get_tree().set_network_peer(host)
 	
 	DEBUG.logger(0, ['Started server on port', port, 'with', max_players, 'max players'])
@@ -31,7 +31,7 @@ func join_server():
 	var port = get_node('../lobby/join/port_input').text
 	
 	var host = NetworkedMultiplayerENet.new()
-	host.create_client(ip, port)
+	host.create_client(ip, int(port))
 	get_tree().set_network_peer(host)
 
 func enter_room():
