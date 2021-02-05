@@ -1,14 +1,21 @@
 extends Control
 
-func _input(event):
-	if event is InputEventKey:
-		if event.pressed and event.scancode == KEY_ENTER:
-			send_message($chat_input.text)
-			$chat_input.text = ''
+onready var MAP = get_node('../../map')
+
+func _ready():
+	$name_input.text = Data.me.name
 
 func send_message(msg):
-	var id = get_tree().get_network_unique_id()
-	rpc('receive_message', id, msg)
+	$chat_input.text = ''
+	rpc('receive_message', msg)
 
-remotesync func receive_message(id, msg):
-	$chat_display.text += str(id) + ': ' + msg + '\n'
+remotesync func receive_message(msg):
+	var id = get_tree().get_rpc_sender_id()
+	var sender_name = (Data.players[id].name if id in Data.players else str(id))
+	$chat_display.text += sender_name + ': ' + msg + '\n'
+
+func change_name(new_name):
+	rpc('receive_message', 'changed their name to %s' % new_name)
+	
+	Data.me.name = new_name
+	Data.update_me()

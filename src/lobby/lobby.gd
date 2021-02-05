@@ -1,7 +1,5 @@
 extends Control
 
-onready var NET = get_node('../networking')
-
 func _ready():
 	show()
 	$join.show()
@@ -20,8 +18,8 @@ func host_server():
 	
 	NET.start_server(int(port), int(max_players))
 
-func joined():
+func joined(): #U: 
 	$join.hide()
 	$host.hide()
 	$chatroom.show()
-	$chatroom.send_message('joined')
+	$chatroom.send_message('joined') #A: Announces it in the chat

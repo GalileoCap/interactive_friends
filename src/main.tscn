@@ -1,16 +1,15 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://src/lobby/lobby.gd" type="Script" id=1]
 [ext_resource path="res://src/main.gd" type="Script" id=2]
 [ext_resource path="res://src/lobby/chatroom.gd" type="Script" id=3]
-[ext_resource path="res://src/debug.gd" type="Script" id=4]
-[ext_resource path="res://src/networking/networking.gd" type="Script" id=5]
+[ext_resource path="res://src/map/map.gd" type="Script" id=6]
 
 [node name="main" type="Node"]
 script = ExtResource( 2 )
 
 [node name="lobby" type="Control" parent="."]
-visible = false
+pause_mode = 2
 margin_right = 40.0
 margin_bottom = 40.0
 script = ExtResource( 1 )
@@ -120,12 +119,20 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="networking" type="Node" parent="."]
-script = ExtResource( 5 )
+[node name="name_input" type="LineEdit" parent="lobby/chatroom"]
+margin_left = 24.0
+margin_top = 24.0
+margin_right = 136.0
+margin_bottom = 56.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="debug" type="Node" parent="."]
-script = ExtResource( 4 )
+[node name="map" type="Node" parent="."]
+script = ExtResource( 6 )
 
-[node name="players" type="Node" parent="."]
+[node name="players" type="Node" parent="map"]
 [connection signal="button_up" from="lobby/join/join_button" to="lobby" method="join_server"]
 [connection signal="button_up" from="lobby/host/host_button" to="lobby" method="host_server"]
+[connection signal="text_entered" from="lobby/chatroom/chat_input" to="lobby/chatroom" method="send_message"]
+[connection signal="text_entered" from="lobby/chatroom/name_input" to="lobby/chatroom" method="change_name"]

@@ -1,8 +1,6 @@
 extends KinematicBody2D
 
-var DEBUG = null
-
-const MOTION_SPEED = 130.0
+const MOTION_SPEED = 200.0
 
 puppet var puppet_pos = Vector2()
 puppet var puppet_motion = Vector2()
@@ -31,4 +29,4 @@ func _physics_process(_delta):
 
 	move_and_slide(motion * MOTION_SPEED)
 	if not is_network_master():
-		puppet_pos = position # To avoid jitter
+		puppet_pos = position #To avoid jitter

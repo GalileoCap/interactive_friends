@@ -19,6 +19,12 @@ config/name="interactive_friends"
 run/main_scene="res://src/main.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Data="*res://src/data.gd"
+Debug="*res://src/debug.gd"
+NET="*res://src/networking/networking.gd"
+
 [rendering]
 
 quality/driver/driver_name="GLES2"
