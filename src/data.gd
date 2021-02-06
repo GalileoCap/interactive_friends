@@ -4,16 +4,33 @@ puppet var players = {}
 var me = {
 	'name': 'PLAYER',
 }
+var my_room = {
+	'data':[]
+	} #TODO: How to send rooms, maybe send a matrix of the tiles?
 
+func _ready():
+	var _tmp = get_tree().connect('connected_to_server', self, 'enter_server')
+
+func enter_server():
+	rpc_id(1, 'get_players')
+	update_me()
+
+#U: Sends everyone my info
 func update_me():
-	rpc_id(1, 'update_player', me)
+	rpc('update_player', me)
 
-remotesync func update_player(info): 
+#U: Updates a player's info
+remotesync func update_player(info):
 	var id = get_tree().get_rpc_sender_id()
 	players[id] = info
 	
-	rset('players', players)
+	Debug.logger(3, ['Updated %s\'s info' % id])
 
-func user_exited(id):
-	players.erase(id)
-	rset('players', players)
+#U: [SERVER ONLY] Sends them everyone else's info
+remote func get_players():
+	var id = get_tree().get_rpc_sender_id()
+	rset_id(id, 'players', players)
+
+#*******************************************************************************
+
+#TODO: Handle players disconnecting

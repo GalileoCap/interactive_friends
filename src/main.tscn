@@ -75,6 +75,7 @@ __meta__ = {
 }
 
 [node name="max_players_input" type="TextEdit" parent="lobby/host"]
+visible = false
 margin_left = 624.0
 margin_top = 512.0
 margin_right = 664.0
@@ -132,6 +133,8 @@ __meta__ = {
 script = ExtResource( 6 )
 
 [node name="players" type="Node" parent="map"]
+
+[node name="rooms" type="Node" parent="map"]
 [connection signal="button_up" from="lobby/join/join_button" to="lobby" method="join_server"]
 [connection signal="button_up" from="lobby/host/host_button" to="lobby" method="host_server"]
 [connection signal="text_entered" from="lobby/chatroom/chat_input" to="lobby/chatroom" method="send_message"]

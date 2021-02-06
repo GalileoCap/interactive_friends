@@ -1,6 +1,8 @@
 extends Control
 
 func _ready():
+	var _tmp = get_tree().connect('connected_to_server', self, 'enter_server')
+	
 	show()
 	$join.show()
 	$host.show()
@@ -13,13 +15,12 @@ func join_server():
 	NET.join_server(ip, int(port))
 
 func host_server():
-	var port = $host/port_input.text
-	var max_players = $host/max_players_input.text
+	var port = int($host/port_input.text)
+	var _max_players = int($host/max_players_input.text)-1 #Taking into account the host
 	
-	NET.start_server(int(port), int(max_players))
+	NET.start_server(port, 8) #TODO: int(max_players))
 
-func joined(): #U: 
+func enter_server(): 
 	$join.hide()
 	$host.hide()
 	$chatroom.show()
-	$chatroom.send_message('joined') #A: Announces it in the chat

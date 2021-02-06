@@ -1,28 +1,33 @@
 extends Node
 
 var Lobby
+var Map
+
+#TODO:
+#set_refuse_new_network_connections(value) # Refuse new players
+#get_tree().connect('connected_to_server', self, 'enter_room')
 
 func _ready():
-#	get_tree().connect('network_peer_connected', self, 'player_entered')
-#	get_tree().connect('network_peer_disconnected', self, 'player_exited')
-	get_tree().connect('connected_to_server', self, 'enter_room')
+	pass
+#	get_tree().connect('network_peer_connected', self, 'peer_connected')
+#	get_tree().connect('network_peer_disconnected', self, 'peer_disconnected')
+#	get_tree().connter('connection_failed', self, 'failed')
 
-func start_server(port, max_players): 
+	#TODO: Reset Lobby
+#	get_tree().connter('server_disconnected', self, 'server_disconnected')
+
+#U: Starts a server
+func start_server(port, max_players):
 	var host = NetworkedMultiplayerENet.new()
-	host.create_server(int(port), int(max_players))
+	host.create_server(port, max_players)
 	get_tree().set_network_peer(host)
 	
 	Debug.logger(0, ['Started server on port %s with %s max players' % [port, max_players]])
 	
-	enter_room()
+	get_tree().emit_signal('connected_to_server') #A: The host enters the room
 
+#U: Joins a server
 func join_server(ip, port):
 	var host = NetworkedMultiplayerENet.new()
-	host.create_client(ip, int(port))
+	host.create_client(ip, port)
 	get_tree().set_network_peer(host)
-
-func enter_room():
-	Data.rpc_id(1, 'update_player', Data.me)
-	Lobby.joined()
-	
-	Debug.logger(0, ['Joined room'])
