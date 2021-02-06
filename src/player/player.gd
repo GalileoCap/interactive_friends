@@ -1,32 +1,24 @@
-extends KinematicBody2D
+extends Node2D
 
-const MOTION_SPEED = 200.0
-
-puppet var puppet_pos = Vector2()
-puppet var puppet_motion = Vector2()
+var Map = null
 
 func _ready():
-	puppet_pos = position
+	#U: Chooses which camera to use
+	if self.get_name() == str(get_tree().get_network_unique_id()): #A: This is my node
+		$camera.make_current()
 
-func _physics_process(_delta):
-	var motion = Vector2()
+#U: Places the camera in a given position
+func place_camera(pos):
+	$camera.position = pos
 
-	if is_network_master():
-		if Input.is_action_pressed('ui_left'):
-			motion += Vector2(-1, 0)
-		if Input.is_action_pressed('ui_right'):
-			motion += Vector2(1, 0)
-		if Input.is_action_pressed('ui_up'):
-			motion += Vector2(0, -1)
-		if Input.is_action_pressed('ui_down'):
-			motion += Vector2(0, 1)
+#U: Follows the body through the rooms with the camera
+func follow_body():
+	var pos = $body.global_position
+	var map_pos = Vector2(floor(pos.x / 1024)+1, floor(pos.y / 600)+1) #TODO: Change with screen size
+	var new_pos = Vector2(1024*(map_pos.x - 0.5), 600*(map_pos.y - 0.5))
+	$camera.global_position = new_pos
 
-		rset('puppet_motion', motion)
-		rset('puppet_pos', position)
-	else:
-		position = puppet_pos
-		motion = puppet_motion
+func _process(_delta):
+	follow_body()
 
-	move_and_slide(motion * MOTION_SPEED)
-	if not is_network_master():
-		puppet_pos = position #To avoid jitter
+#TODO: Get player position

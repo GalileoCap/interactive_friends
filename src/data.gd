@@ -24,12 +24,16 @@ remotesync func update_player(info):
 	var id = get_tree().get_rpc_sender_id()
 	players[id] = info
 	
-	Debug.logger(3, ['Updated %s\'s info' % id])
+	Debug.logger(3, ['Updated %s\'s info' % Data.get_id_name(id)])
 
 #U: [SERVER ONLY] Sends them everyone else's info
 remote func get_players():
 	var id = get_tree().get_rpc_sender_id()
 	rset_id(id, 'players', players)
+
+#U: Returns any id's name or the id itself
+func get_id_name(id):
+	return (players[id].name if id in players else str(id))
 
 #*******************************************************************************
 

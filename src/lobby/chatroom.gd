@@ -11,7 +11,7 @@ func send_message(msg):
 
 remotesync func receive_message(msg):
 	var id = get_tree().get_rpc_sender_id()
-	var sender_name = (Data.players[id].name if id in Data.players else str(id))
+	var sender_name = (Data.get_id_name(id))
 	$chat_display.text += sender_name + ': ' + msg + '\n'
 
 func change_name(new_name):

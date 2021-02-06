@@ -6,6 +6,7 @@
 [ext_resource path="res://src/map/map.gd" type="Script" id=6]
 
 [node name="main" type="Node"]
+pause_mode = 2
 script = ExtResource( 2 )
 
 [node name="lobby" type="Control" parent="."]
@@ -130,11 +131,14 @@ __meta__ = {
 }
 
 [node name="map" type="Node" parent="."]
+pause_mode = 2
 script = ExtResource( 6 )
 
 [node name="players" type="Node" parent="map"]
+pause_mode = 1
 
 [node name="rooms" type="Node" parent="map"]
+pause_mode = 1
 [connection signal="button_up" from="lobby/join/join_button" to="lobby" method="join_server"]
 [connection signal="button_up" from="lobby/host/host_button" to="lobby" method="host_server"]
 [connection signal="text_entered" from="lobby/chatroom/chat_input" to="lobby/chatroom" method="send_message"]

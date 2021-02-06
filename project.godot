@@ -24,6 +24,8 @@ config/icon="res://icon.png"
 Data="*res://src/data.gd"
 Debug="*res://src/debug.gd"
 NET="*res://src/networking/networking.gd"
+Config="*res://src/config.gd"
+Global="*res://src/global.gd"
 
 [rendering]
 

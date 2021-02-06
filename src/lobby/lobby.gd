@@ -24,3 +24,4 @@ func enter_server():
 	$join.hide()
 	$host.hide()
 	$chatroom.show()
+	$chatroom.send_message('joined')
